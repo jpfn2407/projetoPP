@@ -23,21 +23,26 @@ public class Controller {
         this.factory.setSimulationTime(time);
     }
 
-    public void setCarGeneratorSetMinDay(String modelID, int minDay){
-        this.factory.setCarGeneratorSetMinDay(modelID, minDay);
+    public void setCarGeneratorSetMinDay(String modelID, String minDay){
+        int minDayInt = Integer.parseInt(minDay);
+        this.factory.setCarGeneratorSetMinDay(modelID, minDayInt);
     }
 
-    public void setCarGeneratorSetMaxDay(String modelID, int maxDay){
-        this.factory.setCarGeneratorSetMaxDay(modelID, maxDay);
+    public void setCarGeneratorSetMaxDay(String modelID, String maxDay){
+        int maxDayInt = Integer.parseInt(maxDay);
+        this.factory.setCarGeneratorSetMaxDay(modelID, maxDayInt);
     }
 
     public void startSimulation() {
         this.factory.startSimulation();
+
         try {
             TimeUnit.SECONDS.sleep(this.simulationTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         this.factory.stopSimulation();
+
     }
 }

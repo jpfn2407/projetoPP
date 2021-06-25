@@ -1,13 +1,19 @@
 package pt.ual.pp.projeto.models;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
 public class CarGenerator implements Runnable {
     private boolean running;
     private String modelID;
-    private double minDay;
-    private double maxDay;
+    private Factory factory;
+    private double minDay; //Os valores destes dias já estão
+    private double maxDay; //traduzidos para representarem tempo de simulaçao.
 
-    public CarGenerator(String modelID) {
+    public CarGenerator(String modelID, Factory factory) {
         this.running = false;
+        this.factory = factory;
         this.modelID = modelID;
     }
 
@@ -15,13 +21,20 @@ public class CarGenerator implements Runnable {
     public void run() {
 
         while (this.running){
-            System.out.println(this.modelID + " está a correr");
+            Random random = new Random();
+            double newOrderWaitTime = this.minDay + (this.maxDay - this.minDay) * random.nextDouble();
+            try {
+                TimeUnit.MICROSECONDS.sleep(Math.round(newOrderWaitTime * 1_000_000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.factory.buildNewCar(this.modelID);
         }
 
     }
 
-    public void setModelID(String modelID) {
-        this.modelID = modelID;
+    public String getModelID() {
+        return this.modelID;
     }
 
     public void setMinDay(double minDay) {
@@ -30,10 +43,6 @@ public class CarGenerator implements Runnable {
 
     public void setMaxDay(double maxDay) {
         this.maxDay = maxDay;
-    }
-
-    public String getModelID() {
-        return this.modelID;
     }
 
     public void startRunning(){

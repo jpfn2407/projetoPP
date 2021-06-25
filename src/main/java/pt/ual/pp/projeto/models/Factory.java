@@ -1,31 +1,76 @@
 package pt.ual.pp.projeto.models;
 
+import pt.ual.pp.projeto.models.sequence.ModelSequence;
+
 import java.util.HashMap;
 
 public class Factory {
-    private Integer simulationTime = 0;
-    private HashMap<String, CarGenerator> carGeneratorMap = new HashMap<>();
-    private HashMap<String, Thread> carGeneratorThreadMap = new HashMap<>();
 
+    private Integer simulationTime = 0;
+    private Double dayInSimulationTime = 0.0;
+    private Double hourInSimulationTime = 0.0;
+
+    private HashMap<String, Car> carMap = new HashMap<>(); //Todos os carros construidos
+    private HashMap<String, Zone> zoneMap = new HashMap<>(); //Mapa com as zonas
+    private HashMap<String, Thread> carGeneratorThreadMap = new HashMap<>(); //Threads que correm os geradores de carros
+    private HashMap<String, CarGenerator> carGeneratorMap = new HashMap<>(); //Objetos geradores de carros, usados para começarem as threads
+    private HashMap<String, ModelSequence> modelSequenceMap = new HashMap<>(); //Objetos que representam a tabela 4 do enunciado
 
     public Factory() {
-        this.carGeneratorMap.put("1", new CarGenerator("1"));
+
+        //Criação dos carros
+        this.carGeneratorMap.put("1", new CarGenerator("1", this));
+        this.carGeneratorMap.put("2", new CarGenerator("2", this));
+        this.carGeneratorMap.put("3", new CarGenerator("3", this));
+
+        //Criação da tabela de sequencias dos carros
+        this.modelSequenceMap.put("1", new ModelSequence("1"));
+        this.modelSequenceMap.put("2", new ModelSequence("2"));
+        this.modelSequenceMap.put("3", new ModelSequence("3"));
+
+        //Criação das zonas
+        //TODO
+
     }
 
     public void setSimulationTime(int time) {
         this.simulationTime = time;
+        this.dayInSimulationTime = time / 365.0;
+        this.hourInSimulationTime = time / 8760.0;
+    }
+
+    public Integer getSimTime() {
+        return simulationTime;
+    }
+
+    public Double getSimTimeInDays() {
+        return dayInSimulationTime;
+    }
+
+    public Double getSimTimeInHours() {
+        return hourInSimulationTime;
+    }
+
+    public void buildNewCar(String modelID) {
+        this.carMap.put(modelID, new Car(modelID, this.modelSequenceMap.get(modelID)));
     }
 
     public void setCarGeneratorSetMinDay(String modelID, int minDay){
-        this.carGeneratorMap.get(modelID).setMinDay(minDay);
+        this.carGeneratorMap.get(modelID).setMinDay(minDay * this.dayInSimulationTime);
     }
 
     public void setCarGeneratorSetMaxDay(String modelID, int maxDay){
-        this.carGeneratorMap.get(modelID).setMaxDay(maxDay);
+        this.carGeneratorMap.get(modelID).setMaxDay(maxDay * this.dayInSimulationTime);
     }
 
-    public void startSimulation() {
+    public void addSequenceInfo(String modelID, int sequenceOrderNumber, String zoneID, double average){
+        this.modelSequenceMap.get(modelID).addSequenceInfo(sequenceOrderNumber, this.zoneMap.get(zoneID), average);
+    }
 
+
+
+    //---------------------------------------------------------------------------------------------------------------
+    public void startSimulation() {
         for (CarGenerator carGenerator : this.carGeneratorMap.values()){
             carGenerator.startRunning();
             this.carGeneratorThreadMap.put(carGenerator.getModelID(), new Thread(carGenerator));
@@ -41,4 +86,5 @@ public class Factory {
             thread.stop();
         }
     }
+
 }
