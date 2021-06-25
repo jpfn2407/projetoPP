@@ -15,7 +15,7 @@ public class CarGenerator implements Runnable {
     public void run() {
 
         while (this.running){
-            System.out.println(this.modelID + " está a correr");
+            System.out.println(this.modelID + " está a correr " + this.minDay + " e " + this.maxDay);
         }
 
     }

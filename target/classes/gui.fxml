@@ -89,8 +89,8 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <Separator layoutY="524.0" prefHeight="0.0" prefWidth="1280.0" />
-            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="1253.0" text="Simular" />
-            <ProgressBar layoutX="14.0" layoutY="494.0" prefHeight="18.0" prefWidth="1253.0" progress="0.0" />
+            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="44.0" prefWidth="1253.0" text="Simular" />
+            <ProgressBar fx:id="progressBar" layoutX="14.0" layoutY="488.0" prefHeight="31.0" prefWidth="1253.0" progress="0.0" />
             <TextField fx:id="tempoSimulacao" layoutX="186.0" layoutY="48.0" promptText="Tempo de simulação" />
             <HBox layoutX="5.0" layoutY="587.0" prefHeight="185.0" prefWidth="1270.0" />
             <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parametros:" />
@@ -99,12 +99,12 @@
             <Text layoutX="52.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M1:" />
             <Text layoutX="52.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M2:" />
             <Text layoutX="52.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M3:" />
-            <TextField layoutX="86.0" layoutY="92.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
-            <TextField layoutX="155.0" layoutY="92.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
-            <TextField layoutX="86.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
-            <TextField layoutX="155.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
-            <TextField layoutX="86.0" layoutY="150.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
-            <TextField layoutX="155.0" layoutY="150.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
+            <TextField fx:id="model1MinDay" layoutX="86.0" layoutY="92.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
+            <TextField fx:id="model1MaxDay" layoutX="155.0" layoutY="92.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
+            <TextField fx:id="model2MinDay" layoutX="86.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
+            <TextField fx:id="model2MaxDay" layoutX="155.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
+            <TextField fx:id="model3MinDay" layoutX="86.0" layoutY="150.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
+            <TextField fx:id="model3MaxDay" layoutX="155.0" layoutY="150.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
             <Text layoutX="332.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zona:" />
             <Text layoutX="262.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de Linhas:" />
             <Text layoutX="377.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
