@@ -1,7 +1,9 @@
 package pt.ual.pp.projeto;
 
+import pt.ual.pp.projeto.views.CLI;
+
 public class App {
     public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
+        new CLI();
     }
 }
