@@ -84,8 +84,6 @@ public class GUI extends Application implements Initializable {
 
     public CheckBox erlangToggle;
 
-    double progress;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -108,19 +106,6 @@ public class GUI extends Application implements Initializable {
         String tempString = simulationTime.getText();
         controller.setSimulationTime(tempString);
 
-        /*executorService.submit(() -> {
-            double counter = 0.0;
-            while(counter <= 1){
-                progressBar.progressProperty().setValue(counter);
-                try {
-                    TimeUnit.MICROSECONDS.sleep(Math.round(0.001 * (Double.valueOf(tempString)) * 1_000_000));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                counter += 0.001;
-            }
-        });
-*/
         //Choose min/max days-----------------------------------------------------------------------------------------------------------------------------------------
         //Model 1
         controller.setCarGeneratorSetMinDay("1", String.valueOf(model1MinDay.getText()));
@@ -167,21 +152,23 @@ public class GUI extends Application implements Initializable {
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //Enable Erlang----------------------------------------------------------------------------------------------------------------------------------------------
-        controller.setUseErlang(erlangToggle.isSelected());
+        controller.setUseErlang(!erlangToggle.isSelected());
 
+        executorService.submit(()->{
+            controller.startSimulation();
+        });
 
         //Start simulation
         executorService.submit(() -> {
-            controller.startSimulation();
             double counter = 0.0;
-            while(counter <= 1) {
+            while(counter <= 1){
                 progressBar.progressProperty().setValue(counter);
                 try {
-                    TimeUnit.MICROSECONDS.sleep(Math.round(0.001 * (Double.valueOf(tempString)) * 1_000_000));
+                    TimeUnit.MICROSECONDS.sleep(Math.round(0.0001 * (Double.valueOf(tempString)) * 1_000_000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                counter += 0.001;
+                counter += 0.0001;
             }
 
             //Output results
@@ -224,7 +211,6 @@ public class GUI extends Application implements Initializable {
             //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         });
 
-
     }
 
     public static void main(String[] args) {
@@ -233,9 +219,7 @@ public class GUI extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        progressBar.setStyle("-fx-accent: green;");
-
+        progressBar.setStyle("-fx-accent: rgb(6, 200, 37);");
     }
 
 }
