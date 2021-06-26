@@ -16,7 +16,6 @@ public class Zone {
     public Zone(String zoneID, Factory factory){
         this.zoneID = zoneID;
         this.factory = factory;
-        this.linePool = Executors.newFixedThreadPool(1);
     }
 
     public void setNumbOfLines(int numbOfLines){
@@ -28,20 +27,22 @@ public class Zone {
 
         this.linePool.submit(() -> {
             double waitTime = erlang(car.getNextNotDone().getAverage());
+            System.out.println(waitTime);
+            this.lineWorkTimes.put(Thread.currentThread().getId(), waitTime);
+
             try {
                 TimeUnit.MICROSECONDS.sleep(Math.round(waitTime * 1_000_000));
             } catch (InterruptedException e) {
                 //e.printStackTrace();
             }
 
-            this.lineWorkTimes.put(Thread.currentThread().getId(), waitTime);
             car.addBuildTime(waitTime);
-            car.getNextNotDone().markAsDone(); //TODO - o .markAsDone() está a dar erro
 
-            if(car.isFinished()){
-                this.factory.debug_addCarMade();
-            } else {
+            if(car.getNextNotDone() == null){
+                car.getNextNotDone().markAsDone();
                 car.getNextNotDone().getZone().inputCar(car);
+            } else {
+                this.factory.debug_addCarMade();
             }
 
         });
@@ -50,7 +51,7 @@ public class Zone {
     public synchronized double erlang(double average){
         double lambda = 2.0 / average;
         double x = Math.random();
-        return (Math.pow(lambda,2.0) * x * Math.exp((-lambda) * x));
+        return (Math.pow(lambda,2.0) * x * Math.exp((-lambda) * x)) / 1.0;
     }
 
     public String getZoneID() {

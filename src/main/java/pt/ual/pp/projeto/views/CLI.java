@@ -18,7 +18,7 @@ public class CLI {
         controller.startSimulation();*/
 
         System.out.println("Começando a simulação.");
-        controller.setSimulationTime("3");
+        controller.setSimulationTime("30");
 
         //Car generator days
         //Modelo 1
