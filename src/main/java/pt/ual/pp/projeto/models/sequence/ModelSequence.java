@@ -7,8 +7,8 @@ import java.util.HashMap;
 //Está classe representa a tabela 4 representada no enunciado
 public class ModelSequence {
     private String modelID; //Define qual é o modelo que está sequencia representa.
-    private HashMap<Integer, SequenceInfo> sequenceInfoMap; //A chave é o numero da ordem,
-                                                            // e o objeto representa a combinação de zona e o tempo médio que ela lá deve ficar.
+    private HashMap<Integer, SequenceInfo> sequenceInfoMap = new HashMap<>(); //A chave é o numero da ordem,
+                                                                            //e o objeto representa a combinação de zona e o tempo médio que ela lá deve ficar.
 
     public ModelSequence(String modelID) {
         this.modelID = modelID;
@@ -20,7 +20,7 @@ public class ModelSequence {
 
     //Se o return for null, ele já acabou a sequencia
     public SequenceInfo getNextNotDone(){
-        for(int i=1; i < this.sequenceInfoMap.keySet().size(); i++){
+        for(int i=1; i <= this.sequenceInfoMap.keySet().size(); i++){
             if(!this.sequenceInfoMap.get(i).isDone()){
                 return this.sequenceInfoMap.get(i);
             }
@@ -39,11 +39,11 @@ public class ModelSequence {
         return true;
     }
 
+
     public void debug_PrintAll(){
-        for (int i = 1; i < this.sequenceInfoMap.keySet().size(); i++){
+        for (int i = 1; i <= this.sequenceInfoMap.keySet().size(); i++){
             SequenceInfo sequenceInfo = this.sequenceInfoMap.get(i);
             System.out.println(i + " " + sequenceInfo.getZone() + " " + sequenceInfo.getAverage());
         }
     }
-
 }

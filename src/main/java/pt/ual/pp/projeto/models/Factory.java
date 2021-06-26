@@ -1,6 +1,7 @@
 package pt.ual.pp.projeto.models;
 
 import pt.ual.pp.projeto.models.sequence.ModelSequence;
+import pt.ual.pp.projeto.models.sequence.SequenceInfo;
 
 import java.util.HashMap;
 
@@ -16,6 +17,8 @@ public class Factory {
     private HashMap<String, CarGenerator> carGeneratorMap = new HashMap<>(); //Objetos geradores de carros, usados para começarem as threads
     private HashMap<String, ModelSequence> modelSequenceMap = new HashMap<>(); //Objetos que representam a tabela 4 do enunciado
 
+    private Integer debug_numbCarsMade = 0;
+
     public Factory() {
 
         //Criação dos carros
@@ -29,8 +32,11 @@ public class Factory {
         this.modelSequenceMap.put("3", new ModelSequence("3"));
 
         //Criação das zonas
-        //TODO
-
+        this.zoneMap.put("1", new Zone("1", this));
+        this.zoneMap.put("2", new Zone("2", this));
+        this.zoneMap.put("3", new Zone("3", this));
+        this.zoneMap.put("4", new Zone("4", this));
+        this.zoneMap.put("5", new Zone("5", this));
     }
 
     public void setSimulationTime(int time) {
@@ -51,8 +57,11 @@ public class Factory {
         return hourInSimulationTime;
     }
 
-    public void buildNewCar(String modelID) {
-        this.carMap.put(modelID, new Car(modelID, this.modelSequenceMap.get(modelID)));
+    public synchronized void buildNewCar(String modelID) {
+        Car car = new Car(modelID, this.modelSequenceMap.get(modelID));
+        this.carMap.put(modelID, car);
+        this.zoneMap.get(car.getNextNotDone().getZone().getZoneID()).inputCar(car);
+        notify();
     }
 
     public void setCarGeneratorSetMinDay(String modelID, int minDay){
@@ -64,10 +73,12 @@ public class Factory {
     }
 
     public void addSequenceInfo(String modelID, int sequenceOrderNumber, String zoneID, double average){
-        this.modelSequenceMap.get(modelID).addSequenceInfo(sequenceOrderNumber, this.zoneMap.get(zoneID), average);
+        this.modelSequenceMap.get(modelID).addSequenceInfo(sequenceOrderNumber, this.zoneMap.get(zoneID), average * this.hourInSimulationTime);
     }
 
-
+    public void setNumberOfLines(String zoneID, int numberOfLines){
+        this.zoneMap.get(zoneID).setNumbOfLines(numberOfLines);
+    }
 
     //---------------------------------------------------------------------------------------------------------------
     public void startSimulation() {
@@ -85,6 +96,22 @@ public class Factory {
         for(Thread thread : this.carGeneratorThreadMap.values()){
             thread.stop();
         }
+        this.zoneMap.values().stream().forEach(zone -> zone.shutdownLines());
+    }
+
+    public void debug_PrintAllModelSequence(){
+        for(ModelSequence modelSequence : this.modelSequenceMap.values()){
+            modelSequence.debug_PrintAll();
+            System.out.println();
+        }
+    }
+
+    public synchronized void debug_addCarMade(){
+        this.debug_numbCarsMade++;
+    }
+
+    public void debug_printNumbCarsMade(){
+        System.out.println(this.debug_numbCarsMade);
     }
 
 }
