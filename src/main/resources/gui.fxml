@@ -89,9 +89,9 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <Separator layoutY="524.0" prefHeight="0.0" prefWidth="1280.0" />
-            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="1253.0" text="Simular" />
-            <ProgressBar layoutX="14.0" layoutY="494.0" prefHeight="18.0" prefWidth="1253.0" progress="0.0" />
-            <TextField fx:id="tempoSimulacao" layoutX="186.0" layoutY="48.0" promptText="Tempo de simulação" />
+            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="44.0" prefWidth="1253.0" text="Simular" />
+            <ProgressBar fx:id="progressBar" layoutX="14.0" layoutY="488.0" prefHeight="31.0" prefWidth="1253.0" progress="0.0" />
+            <TextField fx:id="simulationTime" layoutX="186.0" layoutY="48.0" promptText="Tempo de simulação" />
             <HBox layoutX="5.0" layoutY="587.0" prefHeight="185.0" prefWidth="1270.0" />
             <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parametros:" />
             <Text layoutX="14.0" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resultados:" />
@@ -99,12 +99,12 @@
             <Text layoutX="52.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M1:" />
             <Text layoutX="52.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M2:" />
             <Text layoutX="52.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M3:" />
-            <TextField layoutX="86.0" layoutY="92.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
-            <TextField layoutX="155.0" layoutY="92.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
-            <TextField layoutX="86.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
-            <TextField layoutX="155.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
-            <TextField layoutX="86.0" layoutY="150.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
-            <TextField layoutX="155.0" layoutY="150.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
+            <TextField fx:id="model1MinDay" layoutX="86.0" layoutY="92.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
+            <TextField fx:id="model1MaxDay" layoutX="155.0" layoutY="92.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
+            <TextField fx:id="model2MinDay" layoutX="86.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
+            <TextField fx:id="model2MaxDay" layoutX="155.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
+            <TextField fx:id="model3MinDay" layoutX="86.0" layoutY="150.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMin" />
+            <TextField fx:id="model3MaxDay" layoutX="155.0" layoutY="150.0" prefHeight="25.0" prefWidth="63.0" promptText="DiaMax" />
             <Text layoutX="332.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zona:" />
             <Text layoutX="262.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de Linhas:" />
             <Text layoutX="377.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
@@ -112,50 +112,50 @@
             <Text layoutX="438.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
             <Text layoutX="468.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
             <Text layoutX="498.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
-            <TextField layoutX="371.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
-            <TextField layoutX="401.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
-            <TextField layoutX="431.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
-            <TextField layoutX="461.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
-            <TextField layoutX="491.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
+            <TextField fx:id="zone1NumberOfLines" layoutX="371.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
+            <TextField fx:id="zone2NumberOfLines" layoutX="401.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
+            <TextField fx:id="zone3NumberOfLines" layoutX="431.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
+            <TextField fx:id="zone4NumberOfLines" layoutX="461.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
+            <TextField fx:id="zone5NumberOfLines" layoutX="491.0" layoutY="135.0" prefHeight="25.0" prefWidth="20.0" />
             <Text layoutX="51.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modelo:" />
             <Text layoutX="207.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
-            <TextField layoutX="114.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model1Zone1AverageTime" layoutX="114.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
             <Text layoutX="64.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z1:" />
             <Text layoutX="64.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z2:" />
             <Text layoutX="64.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z3:" />
             <Text layoutX="64.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z4:" />
             <Text layoutX="64.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z5:" />
-            <TextField layoutX="212.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model1Zone1Order" layoutX="212.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
             <Text layoutX="412.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
-            <TextField layoutX="319.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="417.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="114.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="212.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="114.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="212.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="114.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="212.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="114.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="212.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="320.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="418.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="320.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="418.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="320.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="418.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="320.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="418.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model2Zone1AverageTime" layoutX="319.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model2Zone1Order" layoutX="417.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model1Zone2AverageTime" layoutX="114.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model1Zone2Order" layoutX="212.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model1Zone3AverageTime" layoutX="114.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model1Zone3Order" layoutX="212.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model1Zone4AverageTime" layoutX="114.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model1Zone4Order" layoutX="212.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model1Zone5AverageTime" layoutX="114.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model1Zone5Order" layoutX="212.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model2Zone2AverageTime" layoutX="320.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model2Zone2Order" layoutX="418.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model2Zone3AverageTime" layoutX="320.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model2Zone3Order" layoutX="418.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model2Zone4AverageTime" layoutX="320.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model2Zone4Order" layoutX="418.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model2Zone5AverageTime" layoutX="320.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model2Zone5Order" layoutX="418.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
             <Text layoutX="618.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
-            <TextField layoutX="525.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="623.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="526.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="624.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="526.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="624.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="526.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="624.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField layoutX="526.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField layoutX="624.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model3Zone1AverageTime" layoutX="525.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model3Zone1Order" layoutX="623.0" layoutY="233.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model3Zone2AverageTime" layoutX="526.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model3Zone2Order" layoutX="624.0" layoutY="268.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model3Zone3AverageTime" layoutX="526.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model3Zone3Order" layoutX="624.0" layoutY="302.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model3Zone4AverageTime" layoutX="526.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model3Zone4Order" layoutX="624.0" layoutY="337.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <TextField fx:id="model3Zone5AverageTime" layoutX="526.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+            <TextField fx:id="model3Zone5Order" layoutX="624.0" layoutY="372.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
       </children>
     </AnchorPane>
   </children>
