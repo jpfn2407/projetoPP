@@ -6,7 +6,7 @@ public class SequenceInfo {
     private Zone zone; //Representa qual é o ID da zona que o carro deve passar.
     private Double average; //Representa o tempo medio, já traduzido em tempo de
                             //simulação que um carro fica a ser construido na zona.
-    private boolean isDone;
+    private boolean isDone = false;
 
     public SequenceInfo(Zone zone, Double average) {
         this.zone = zone;

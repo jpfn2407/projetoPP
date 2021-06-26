@@ -2,6 +2,8 @@ package pt.ual.pp.projeto.views;
 
 import pt.ual.pp.projeto.controllers.Controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class CLI {
@@ -18,7 +20,7 @@ public class CLI {
         controller.startSimulation();*/
 
         System.out.println("Começando a simulação.");
-        controller.setSimulationTime("30");
+        controller.setSimulationTime("3");
 
         //Car generator days
         //Modelo 1
@@ -58,7 +60,35 @@ public class CLI {
         controller.setZoneNumberOfLines("4", "3");
         controller.setZoneNumberOfLines("5", "1");
 
+        controller.setUseErlang(false);
+
         controller.startSimulation();
+
+        System.out.println("Tempo médio que cada tipo de modelo demora a ser construido:");
+        HashMap<String, Double> averageBuildTime = controller.getModelAverageBuildTime();
+        for(String key : averageBuildTime.keySet()){
+            System.out.println("M"+ key + ": " + averageBuildTime.get(key) + " horas.");
+        }
+
+        System.out.println(" ");
+        System.out.println("Tempo médio que cada tipo de modelo fica em espera:");
+        HashMap<String, Double> averageWaitTime = controller.getAverageWaitTime();
+        for(String key : averageWaitTime.keySet()){
+            System.out.println("M" + key + ": " + averageWaitTime.get(key) + " horas.");
+        }
+
+        System.out.println(" ");
+        System.out.println("Percentagem de tempo de utilização de cada linha de trabalho:");
+        HashMap<String, ArrayList<Double>> linesAverages = controller.getLinesAverages();
+        for(String key : linesAverages.keySet()){
+            int line = 1;
+            for(Double value : linesAverages.get(key)){
+                System.out.println("Z" + key + " L" + line + ": " + value + "%" );
+                line++;
+            }
+            System.out.println(" ");
+        }
+
         System.out.println("Simulação terminada.");
     }
 }
