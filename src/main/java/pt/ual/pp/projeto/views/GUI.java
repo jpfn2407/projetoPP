@@ -8,13 +8,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import pt.ual.pp.projeto.controllers.Controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class GUI extends Application implements Initializable {
@@ -72,9 +78,9 @@ public class GUI extends Application implements Initializable {
     public TextField model3Zone4Order;
     public TextField model3Zone5Order;
 
-    public TextField averageBuildTimeOutput;
-    public TextField averageWaitTimeOutput;
-    public TextField averageUsagePercentageOutput;
+    public TextArea averageBuildTimeOutput;
+    public TextArea averageWaitTimeOutput;
+    public TextArea averageUsagePercentageOutput;
 
     public CheckBox erlangToggle;
 
@@ -87,16 +93,13 @@ public class GUI extends Application implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/gui.fxml"));
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("Projecto Paradigmas Programação");
-        primaryStage.setScene(new Scene(root, 733, 800));
+        primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
     }
 
     public void startSimulation() {
-        System.out.println("Simulacao iniciada");
 
-        increaseProgress();
-        increaseProgress();
-        increaseProgress();
+        ExecutorService executorService = Executors.newCachedThreadPool();
 
         //Initialize Controller
         Controller controller = new Controller();
@@ -105,8 +108,20 @@ public class GUI extends Application implements Initializable {
         String tempString = simulationTime.getText();
         controller.setSimulationTime(tempString);
 
-
-        //Choose min/max days-------------------------------------------------------------------------------------------------------------------
+        /*executorService.submit(() -> {
+            double counter = 0.0;
+            while(counter <= 1){
+                progressBar.progressProperty().setValue(counter);
+                try {
+                    TimeUnit.MICROSECONDS.sleep(Math.round(0.001 * (Double.valueOf(tempString)) * 1_000_000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                counter += 0.001;
+            }
+        });
+*/
+        //Choose min/max days-----------------------------------------------------------------------------------------------------------------------------------------
         //Model 1
         controller.setCarGeneratorSetMinDay("1", String.valueOf(model1MinDay.getText()));
         controller.setCarGeneratorSetMaxDay("1", String.valueOf(model1MaxDay.getText()));
@@ -118,9 +133,9 @@ public class GUI extends Application implements Initializable {
         //Model 3
         controller.setCarGeneratorSetMinDay("3", String.valueOf(model3MinDay.getText()));
         controller.setCarGeneratorSetMaxDay("3", String.valueOf(model3MaxDay.getText()));
-        //--------------------------------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        //Choose Model Order and Average time by Zone-------------------------------------------------------------------------------------------
+        //Choose Model Order and Average time by Zone----------------------------------------------------------------------------------------------------------------
         //Model 1
         controller.addSequenceInfo("1", String.valueOf(model1Zone1Order.getText()), "1", String.valueOf(model1Zone1AverageTime.getText()));
         controller.addSequenceInfo("1", String.valueOf(model1Zone2Order.getText()), "2", String.valueOf(model1Zone2AverageTime.getText()));
@@ -141,22 +156,75 @@ public class GUI extends Application implements Initializable {
         controller.addSequenceInfo("3", String.valueOf(model3Zone3Order.getText()), "3", String.valueOf(model3Zone3AverageTime.getText()));
         controller.addSequenceInfo("3", String.valueOf(model3Zone4Order.getText()), "4", String.valueOf(model3Zone4AverageTime.getText()));
         controller.addSequenceInfo("3", String.valueOf(model3Zone5Order.getText()), "5", String.valueOf(model3Zone5AverageTime.getText()));
-        //--------------------------------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        //Choose number of lines per zone-------------------------------------------------------------------------------------------------------
+        //Choose number of lines per zone----------------------------------------------------------------------------------------------------------------------------
         controller.setZoneNumberOfLines("1", String.valueOf(zone1NumberOfLines.getText()));
         controller.setZoneNumberOfLines("2", String.valueOf(zone2NumberOfLines.getText()));
         controller.setZoneNumberOfLines("3", String.valueOf(zone3NumberOfLines.getText()));
         controller.setZoneNumberOfLines("4", String.valueOf(zone4NumberOfLines.getText()));
         controller.setZoneNumberOfLines("5", String.valueOf(zone5NumberOfLines.getText()));
-        //--------------------------------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //Enable Erlang----------------------------------------------------------------------------------------------------------------------------------------------
+        controller.setUseErlang(erlangToggle.isSelected());
 
 
         //Start simulation
-        controller.startSimulation();
+        executorService.submit(() -> {
+            controller.startSimulation();
+            double counter = 0.0;
+            while(counter <= 1) {
+                progressBar.progressProperty().setValue(counter);
+                try {
+                    TimeUnit.MICROSECONDS.sleep(Math.round(0.001 * (Double.valueOf(tempString)) * 1_000_000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                counter += 0.001;
+            }
+
+            //Output results
+            //Average Build Time-----------------------------------------------------------------------------------------------------------------------------------------
+            String output1FinalText = "Tempo médio que cada tipo de modelo demora a ser construido: \n\n";
+
+            HashMap<String, Double> averageBuildTime = controller.getModelAverageBuildTime();
+            for(String key : averageBuildTime.keySet()){
+                output1FinalText += ("M"+ key + ": " + averageBuildTime.get(key) + " horas.\n");
+            }
+
+            averageBuildTimeOutput.setText(output1FinalText);
+            //-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            //Average Wait Time------------------------------------------------------------------------------------------------------------------------------------------
+            String outputAverageWaitTimeOutput = "Tempo médio que cada tipo de modelo fica em espera: \n\n";
+
+            HashMap<String, Double> averageWaitTime = controller.getAverageWaitTime();
+            for(String key : averageWaitTime.keySet()){
+                outputAverageWaitTimeOutput += ("M" + key + ": " + averageWaitTime.get(key) + " horas.\n");
+            }
+
+            averageWaitTimeOutput.setText(outputAverageWaitTimeOutput);
+            //-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            //Average Usage Percentage-----------------------------------------------------------------------------------------------------------------------------------
+            String outputAverageUsagePercentageOutput = "Percentagem de tempo de utilização de cada linha de trabalho: \n\n";
+
+            HashMap<String, ArrayList<Double>> linesAverages = controller.getLinesAverages();
+            for(String key : linesAverages.keySet()) {
+                int line = 1;
+                for (Double value : linesAverages.get(key)) {
+                    outputAverageUsagePercentageOutput += ("Z" + key + " L" + line + ": " + value + "%\n");
+                    line++;
+                }
+                outputAverageUsagePercentageOutput += "\n";
+            }
+
+            averageUsagePercentageOutput.setText(outputAverageUsagePercentageOutput);
+            //-----------------------------------------------------------------------------------------------------------------------------------------------------------
+        });
 
 
-        System.out.println("Simulação decorrida em " + tempString + " segundos.");
     }
 
     public static void main(String[] args) {
@@ -170,8 +238,4 @@ public class GUI extends Application implements Initializable {
 
     }
 
-    public void increaseProgress() {
-        progress += 0.25;
-        progressBar.setProgress(progress);
-    }
 }
