@@ -25,7 +25,7 @@ public class Car {
     }
 
     public SequenceInfo getNextNotDone(){
-        return this.modelSequence.getNextNotDone();
+        return this.modelSequence.getCurrentUnfinishedSequenceInfo();
     }
 
     public double getBuildTime(){

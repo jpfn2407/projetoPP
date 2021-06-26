@@ -1,5 +1,7 @@
 package pt.ual.pp.projeto.models;
 
+import pt.ual.pp.projeto.models.sequence.ModelSequence;
+
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,7 +13,7 @@ public class Zone {
     private Factory factory;
     private ExecutorService linePool; //ThreadPool das linhas
     private HashMap<Long, Double> lineWorkTimes = new HashMap<>(); //HashMap com o ID da thread,
-                                                                    //e uma Collection<Double> com os tempos que ela trabalhou
+                                                                    //e uma Collection<Double> com os tempos que ela trabalhou.
 
     public Zone(String zoneID, Factory factory){
         this.zoneID = zoneID;
@@ -23,28 +25,17 @@ public class Zone {
     }
 
     //Metodo principal. Para meter carros nas linhas e mandar para outras zonas depois.
-    public void inputCar(Car car){
-
+    public void inputCar(ModelSequence modelSequence){
         this.linePool.submit(() -> {
-            double waitTime = erlang(car.getNextNotDone().getAverage());
-            System.out.println(waitTime);
-            this.lineWorkTimes.put(Thread.currentThread().getId(), waitTime);
+            if(!modelSequence.isFinished()){
+                System.out.println(modelSequence.getCurrentUnfinishedNumber());
+                if(modelSequence.getCurrentUnfinishedSequenceInfo() != null){
+                    modelSequence.getCurrentUnfinishedSequenceInfo();
+                    modelSequence.getCurrentUnfinishedNumber();
+                    modelSequence.setAsDone(modelSequence.getCurrentUnfinishedNumber());
+                }
 
-            try {
-                TimeUnit.MICROSECONDS.sleep(Math.round(waitTime * 1_000_000));
-            } catch (InterruptedException e) {
-                //e.printStackTrace();
             }
-
-            car.addBuildTime(waitTime);
-
-            if(car.getNextNotDone() == null){
-                car.getNextNotDone().markAsDone();
-                car.getNextNotDone().getZone().inputCar(car);
-            } else {
-                this.factory.debug_addCarMade();
-            }
-
         });
     }
 
@@ -61,7 +52,7 @@ public class Zone {
     //Usado para fechar a thread, só mesmo para assegurar que o programa não continua a correr.
     public void shutdownLines(){
         try {
-            this.linePool.awaitTermination(1, TimeUnit.MICROSECONDS);
+            this.linePool.awaitTermination(1, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

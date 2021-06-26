@@ -2,6 +2,8 @@ package pt.ual.pp.projeto.views;
 
 import pt.ual.pp.projeto.controllers.Controller;
 
+import java.security.KeyPair;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class CLI {
@@ -18,18 +20,18 @@ public class CLI {
         controller.startSimulation();*/
 
         System.out.println("Começando a simulação.");
-        controller.setSimulationTime("30");
+        controller.setSimulationTime("3");
 
         //Car generator days
         //Modelo 1
         controller.setCarGeneratorSetMinDay("1", "3");
         controller.setCarGeneratorSetMaxDay("1", "7");
         //Modelo 2
-        controller.setCarGeneratorSetMinDay("2", "4");
+        /*controller.setCarGeneratorSetMinDay("2", "4");
         controller.setCarGeneratorSetMaxDay("2", "6");
         //Modelo 3
         controller.setCarGeneratorSetMinDay("3", "2");
-        controller.setCarGeneratorSetMaxDay("3", "5");
+        controller.setCarGeneratorSetMaxDay("3", "5");*/
 
         //Car generator sequences / Tabela 4 do enunciado
         //Modelo 1
@@ -59,6 +61,12 @@ public class CLI {
         controller.setZoneNumberOfLines("5", "1");
 
         controller.startSimulation();
+
+        HashMap<String, Double> averageBuildTime = controller.getModelAverageBuildTime();
+        for(String key : averageBuildTime.keySet()){
+            System.out.println("M"+ key + ": " + averageBuildTime.get(key));
+        }
+
         System.out.println("Simulação terminada.");
     }
 }

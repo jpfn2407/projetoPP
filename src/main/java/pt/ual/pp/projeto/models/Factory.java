@@ -3,6 +3,8 @@ package pt.ual.pp.projeto.models;
 import pt.ual.pp.projeto.models.sequence.ModelSequence;
 import pt.ual.pp.projeto.models.sequence.SequenceInfo;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Factory {
@@ -11,7 +13,7 @@ public class Factory {
     private Double dayInSimulationTime = 0.0;
     private Double hourInSimulationTime = 0.0;
 
-    private HashMap<String, Car> carMap = new HashMap<>(); //Todos os carros construidos
+    private HashMap<String, ArrayList<Car>> carMap = new HashMap<>(); //Todos os carros construidos
     private HashMap<String, Zone> zoneMap = new HashMap<>(); //Mapa com as zonas
     private HashMap<String, Thread> carGeneratorThreadMap = new HashMap<>(); //Threads que correm os geradores de carros
     private HashMap<String, CarGenerator> carGeneratorMap = new HashMap<>(); //Objetos geradores de carros, usados para começarem as threads
@@ -23,8 +25,8 @@ public class Factory {
 
         //Criação dos carros
         this.carGeneratorMap.put("1", new CarGenerator("1", this));
-        this.carGeneratorMap.put("2", new CarGenerator("2", this));
-        this.carGeneratorMap.put("3", new CarGenerator("3", this));
+        /*this.carGeneratorMap.put("2", new CarGenerator("2", this));
+        this.carGeneratorMap.put("3", new CarGenerator("3", this));*/
 
         //Criação da tabela de sequencias dos carros
         this.modelSequenceMap.put("1", new ModelSequence("1"));
@@ -59,9 +61,21 @@ public class Factory {
 
     public synchronized void buildNewCar(String modelID) {
         Car car = new Car(modelID, this.modelSequenceMap.get(modelID));
-        this.carMap.put(modelID, car);
-        this.zoneMap.get(car.getNextNotDone().getZone().getZoneID()).inputCar(car);
+        if(this.carMap.containsKey(modelID)){
+            this.carMap.get(modelID).add(car);
+        } else {
+            ArrayList<Car> carArrayList = new ArrayList<>();
+            carArrayList.add(car);
+            this.carMap.put(modelID, carArrayList);
+        }
+        //this.carMap.put(modelID, car);
+        sendCarToFirstZone(car);
         notifyAll();
+    }
+
+    public synchronized void sendCarToFirstZone(Car car){
+        ModelSequence carModelSequence = car.getModelSequence();
+        this.zoneMap.get(carModelSequence.getCurrentUnfinishedSequenceInfo().getZone().getZoneID()).inputCar(carModelSequence);
     }
 
     public void setCarGeneratorSetMinDay(String modelID, int minDay){
@@ -79,6 +93,21 @@ public class Factory {
     public void setNumberOfLines(String zoneID, int numberOfLines){
         this.zoneMap.get(zoneID).setNumbOfLines(numberOfLines);
     }
+
+    public HashMap<String, Double> getCarBuildAverage(){
+        HashMap<String, Double> modelAverage = new HashMap<>();
+        for(int i = 1; i <= this.carMap.keySet().size(); i++){
+            ArrayList<Double> values = new ArrayList<>();
+            for(Car car : this.carMap.get(String.valueOf(i))){
+                values.add(car.getBuildTime());
+            }
+            double average = (values.stream().mapToDouble(d->d).sum() / values.size());
+            double averageInRealTime = (average * 8760.0) / simulationTime;
+            modelAverage.put(String.valueOf(i), averageInRealTime);
+        }
+        return modelAverage;
+    }
+
 
     //---------------------------------------------------------------------------------------------------------------
     public void startSimulation() {

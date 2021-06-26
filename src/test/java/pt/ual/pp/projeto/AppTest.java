@@ -37,7 +37,7 @@ public class AppTest {
         assertTrue( true );
     }*/
 
-    @Test
+    /*@Test
     public void carIsNotFinished() {
         assertFalse( this.car.isFinished() );
     }
@@ -109,5 +109,5 @@ public class AppTest {
         }
         Assert.assertTrue(car.isFinished());
 
-    }
+    }*/
 }

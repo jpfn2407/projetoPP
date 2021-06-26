@@ -3,6 +3,7 @@ package pt.ual.pp.projeto.controllers;
 import pt.ual.pp.projeto.models.CarGenerator;
 import pt.ual.pp.projeto.models.Factory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -63,6 +64,10 @@ public class Controller {
 
         this.factory.stopSimulation();
 
+    }
+
+    public HashMap<String, Double> getModelAverageBuildTime(){
+        return this.factory.getCarBuildAverage();
     }
 
 }
