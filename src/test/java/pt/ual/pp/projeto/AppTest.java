@@ -102,12 +102,17 @@ public class AppTest {
     }
 
     @Test
-    public void finishACar() {
-        int i = 0;
-        while(!car.isFinished()){
-            this.car.getNextNotDone().markAsDone();
-        }
-        Assert.assertTrue(car.isFinished());
-
+    public void carNotFinished() {
+        this.car.getNextNotDone().markAsDone();
+        assertFalse(this.car.isFinished());
     }
+
+    @Test
+    public void carIsFinished() {
+        this.car.getNextNotDone().markAsDone();
+        this.car.getNextNotDone().markAsDone();
+        assertTrue(this.car.isFinished());
+    }
+
+
 }

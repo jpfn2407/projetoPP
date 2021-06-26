@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 
 //Está classe representa a tabela 4 representada no enunciado
-public class ModelSequence {
+public class ModelSequence{
     private String modelID; //Define qual é o modelo que está sequencia representa.
     private HashMap<Integer, SequenceInfo> sequenceInfoMap = new HashMap<>(); //A chave é o numero da ordem,
                                                                             //e o objeto representa a combinação de zona e o tempo médio que ela lá deve ficar.
@@ -39,6 +39,9 @@ public class ModelSequence {
         return true;
     }
 
+    public HashMap<Integer, SequenceInfo> getSequenceInfoMap() {
+        return sequenceInfoMap;
+    }
 
     public void debug_PrintAll(){
         for (int i = 1; i <= this.sequenceInfoMap.keySet().size(); i++){
@@ -46,4 +49,6 @@ public class ModelSequence {
             System.out.println(i + " " + sequenceInfo.getZone() + " " + sequenceInfo.getAverage());
         }
     }
+
+
 }

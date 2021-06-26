@@ -36,8 +36,12 @@ public class Car {
         this.buildTime.add(buildTime);
     }
 
-    public void addWaitTime(double waitedTime){
+    public void addWaitTime(Double waitedTime){
         this.waitTimesList.add(waitedTime);
+    }
+
+    public Double getWaitedTimeAverage(){
+        return this.waitTimesList.stream().mapToDouble(d -> d).average().orElse(0.0);
     }
 
     public ModelSequence getModelSequence() {

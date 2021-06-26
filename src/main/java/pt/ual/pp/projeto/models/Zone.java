@@ -1,6 +1,8 @@
 package pt.ual.pp.projeto.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -9,26 +11,50 @@ import java.util.concurrent.TimeUnit;
 public class Zone {
     private String zoneID;
     private Factory factory;
+    private boolean useErlang;
     private ExecutorService linePool; //ThreadPool das linhas
-    private HashMap<Long, Double> lineWorkTimes = new HashMap<>(); //HashMap com o ID da thread,
+    private HashMap<Long, ArrayList<Double>> lineWorkTimes = new HashMap<>(); //HashMap com o ID da thread,
                                                                     //e uma Collection<Double> com os tempos que ela trabalhou
 
     public Zone(String zoneID, Factory factory){
         this.zoneID = zoneID;
         this.factory = factory;
+        this.useErlang = true;
     }
 
     public void setNumbOfLines(int numbOfLines){
         this.linePool = Executors.newFixedThreadPool(numbOfLines);
     }
 
+    public void setUseErlang(boolean bool){
+        this.useErlang = bool;
+    }
+
     //Metodo principal. Para meter carros nas linhas e mandar para outras zonas depois.
-    public void inputCar(Car car){
+    public synchronized void inputCar(Car car){
+        long waitingTimeStart = System.nanoTime();
 
         this.linePool.submit(() -> {
-            double waitTime = erlang(car.getNextNotDone().getAverage());
-            System.out.println(waitTime);
-            this.lineWorkTimes.put(Thread.currentThread().getId(), waitTime);
+
+            //double waitTime = car.getNextNotDone().getAverage();
+
+            long workingTimeStart = System.nanoTime();
+
+            double waitTime = 0.0;
+            if(useErlang){
+                waitTime = erlang(car.getNextNotDone().getAverage());
+            } else {
+                Random random = new Random();
+                waitTime = Math.abs(random.nextGaussian() * car.getNextNotDone().getAverage() + car.getNextNotDone().getAverage());
+            }
+
+            if(this.lineWorkTimes.containsKey(Thread.currentThread().getId())){
+                this.lineWorkTimes.get(Thread.currentThread().getId()).add(waitTime);
+            } else {
+                ArrayList<Double> averages = new ArrayList<>();
+                averages.add(waitTime);
+                this.lineWorkTimes.put(Thread.currentThread().getId(), averages);
+            }
 
             try {
                 TimeUnit.MICROSECONDS.sleep(Math.round(waitTime * 1_000_000));
@@ -37,13 +63,25 @@ public class Zone {
             }
 
             car.addBuildTime(waitTime);
+            car.getNextNotDone().markAsDone();
 
-            if(car.getNextNotDone() == null){
-                car.getNextNotDone().markAsDone();
-                car.getNextNotDone().getZone().inputCar(car);
-            } else {
+
+            long workingTimeEnd = System.nanoTime();
+            long waitingTimeEnd = System.nanoTime();
+
+            long workingTime = workingTimeEnd - workingTimeStart;
+            long waitingTime = waitingTimeEnd - waitingTimeStart;
+
+            long waitedTime = waitingTime - workingTime;
+
+            car.addWaitTime((double) waitedTime / 1_000_000_000);
+
+            if(car.isFinished()){
                 this.factory.debug_addCarMade();
+            } else {
+                car.getNextNotDone().getZone().inputCar(car);
             }
+            return;
 
         });
     }
@@ -58,8 +96,20 @@ public class Zone {
         return zoneID;
     }
 
+    public synchronized void getLines(){
+        ArrayList<Double> totalWorkTimeList = new ArrayList<>();
+        for(Long key : this.lineWorkTimes.keySet()){
+            double workTime = 0.0;
+            for(Double value : this.lineWorkTimes.get(key)){
+                workTime+=value;
+            }
+            totalWorkTimeList.add((workTime/factory.getSimTime())*100);
+        }
+        this.factory.setLinesAverages(this.zoneID, totalWorkTimeList);
+    }
+
     //Usado para fechar a thread, só mesmo para assegurar que o programa não continua a correr.
-    public void shutdownLines(){
+    public synchronized void shutdownLines(){
         try {
             this.linePool.awaitTermination(1, TimeUnit.MICROSECONDS);
         } catch (InterruptedException e) {
