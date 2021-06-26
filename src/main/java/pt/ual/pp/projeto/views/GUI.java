@@ -1,13 +1,14 @@
 package pt.ual.pp.projeto.views;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import pt.ual.pp.projeto.controllers.Controller;
 
 
@@ -99,31 +100,29 @@ public class GUI extends Application {
         controller.setSimulationTime(tempString);
 
 
-        //Choose min/max days--------------------------------------------------------------------------------------------------------------------
+        /*
+        //Choose min/max days-------------------------------------------------------------------------------------------------------------------
         //Min
         controller.setCarGeneratorSetMinDay("1", Integer.parseInt(model1MinDay.getText()));
-        //controller.setCarGeneratorSetMinDay("2", Integer.parseInt(model2MinDay.getText()));
-        //controller.setCarGeneratorSetMinDay("3", Integer.parseInt(model3MinDay.getText()));
+        controller.setCarGeneratorSetMinDay("2", Integer.parseInt(model2MinDay.getText()));
+        controller.setCarGeneratorSetMinDay("3", Integer.parseInt(model3MinDay.getText()))
 
         //Max
         controller.setCarGeneratorSetMaxDay("1", Integer.parseInt(model1MaxDay.getText()));
-        //controller.setCarGeneratorSetMaxDay("2", Integer.parseInt(model2MaxDay.getText()));
-        //controller.setCarGeneratorSetMaxDay("3", Integer.parseInt(model3MaxDay.getText()));
-        //----------------------------------------------------------------------------------------------------------------------------------------
+        controller.setCarGeneratorSetMaxDay("2", Integer.parseInt(model2MaxDay.getText()));
+        controller.setCarGeneratorSetMaxDay("3", Integer.parseInt(model3MaxDay.getText()));
+        ----------------------------------------------------------------------------------------------------------------------------------------
 
-        //Choose number of lines per zone---------------------------------------------------------------------------------------------------------
-        //controller.
-        //controller.
-        //controller.
-        //----------------------------------------------------------------------------------------------------------------------------------------
+        //Choose number of lines per zone-------------------------------------------------------------------------------------------------------
 
-        //Choose Model Order and Average time by Zone---------------------------------------------------------------------------------------------
-        //Average Time
-
-
+        ----------------------------------------------------------------------------------------------------------------------------------------
+        //Choose Model Order and Average time by Zone-------------------------------------------------------------------------------------------
         //Order
 
-        //----------------------------------------------------------------------------------------------------------------------------------------
+        //Average Time
+
+        ----------------------------------------------------------------------------------------------------------------------------------------
+        */
 
 
         //Start simulation
