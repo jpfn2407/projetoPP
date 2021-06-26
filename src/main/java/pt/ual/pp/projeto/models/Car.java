@@ -3,9 +3,12 @@ package pt.ual.pp.projeto.models;
 import pt.ual.pp.projeto.models.sequence.ModelSequence;
 import pt.ual.pp.projeto.models.sequence.SequenceInfo;
 
+import java.util.ArrayList;
+
 public class Car {
     private String modelID;
-    private double buildTime = 0.0;
+    private ArrayList<Double> buildTime = new ArrayList<>();
+    private ArrayList<Double> waitTimesList = new ArrayList<>();
     private ModelSequence modelSequence;
 
     public Car(String modelID, ModelSequence modelSequence) {
@@ -25,11 +28,19 @@ public class Car {
         return this.modelSequence.getNextNotDone();
     }
 
-    public double getBuildTime() {
-        return buildTime;
+    public double getBuildTime(){
+        return this.buildTime.stream().mapToDouble(d -> d).sum();
     }
 
-    public void setBuildTime(double buildTime){
-        this.buildTime = buildTime;
+    public void addBuildTime(double buildTime){
+        this.buildTime.add(buildTime);
+    }
+
+    public void addWaitTime(double waitedTime){
+        this.waitTimesList.add(waitedTime);
+    }
+
+    public ModelSequence getModelSequence() {
+        return modelSequence;
     }
 }
