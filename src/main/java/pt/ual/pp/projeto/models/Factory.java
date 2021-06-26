@@ -61,7 +61,7 @@ public class Factory {
         Car car = new Car(modelID, this.modelSequenceMap.get(modelID));
         this.carMap.put(modelID, car);
         this.zoneMap.get(car.getNextNotDone().getZone().getZoneID()).inputCar(car);
-        notify();
+        notifyAll();
     }
 
     public void setCarGeneratorSetMinDay(String modelID, int minDay){
@@ -84,8 +84,10 @@ public class Factory {
     public void startSimulation() {
         for (CarGenerator carGenerator : this.carGeneratorMap.values()){
             carGenerator.startRunning();
-            this.carGeneratorThreadMap.put(carGenerator.getModelID(), new Thread(carGenerator));
-            this.carGeneratorThreadMap.get(carGenerator.getModelID()).start();
+            Thread thread = new Thread(carGenerator);
+            this.carGeneratorThreadMap.put(carGenerator.getModelID(), thread);
+            //this.carGeneratorThreadMap.get(carGenerator.getModelID()).start();
+            thread.start();
         }
     }
 

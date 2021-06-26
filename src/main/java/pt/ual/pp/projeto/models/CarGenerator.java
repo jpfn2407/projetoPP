@@ -22,11 +22,12 @@ public class CarGenerator implements Runnable {
 
         while (this.running){
             Random random = new Random();
-            double newOrderWaitTime = this.minDay + (this.maxDay - this.minDay) * random.nextDouble();
+            //double newOrderWaitTime = this.minDay + (this.maxDay - this.minDay) * random.nextDouble();
+            double newOrderWaitTime = ThreadLocalRandom.current().nextDouble(this.minDay, this.maxDay);
             try {
                 TimeUnit.MICROSECONDS.sleep(Math.round(newOrderWaitTime * 1_000_000));
             } catch (InterruptedException e) {
-                e.printStackTrace();
+               // e.printStackTrace();
             }
             this.factory.buildNewCar(this.modelID);
         }
