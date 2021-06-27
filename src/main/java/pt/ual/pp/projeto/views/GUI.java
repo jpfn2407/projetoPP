@@ -99,6 +99,12 @@ public class GUI extends Application implements Initializable {
 
     public void startSimulation() {
 
+        //Reset Outputs for new Run
+        averageBuildTimeOutput.clear();
+        averageUsagePercentageOutput.clear();
+        averageWaitTimeOutput.clear();
+
+
         ExecutorService executorService = Executors.newCachedThreadPool();
 
         //Initialize Controller
@@ -159,14 +165,14 @@ public class GUI extends Application implements Initializable {
         executorService.submit(() -> {
             double time = Double.parseDouble(tempString);
             double counter = 0.0;
-            while (counter <= 1) {
+            while (counter <= 1.1) {
                 progressBar.progressProperty().setValue(counter);
                 try {
-                    TimeUnit.MICROSECONDS.sleep(Math.round(0.0001 * time * 1_000_000));
+                    TimeUnit.MICROSECONDS.sleep(Math.round((0.01 * time) * 1_000_000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                counter += 100/time;
+                counter += 0.01;
             }
         });
 
