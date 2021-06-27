@@ -54,9 +54,9 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="Help">
+        <Menu mnemonicParsing="false" text="Clear">
           <items>
-            <MenuItem mnemonicParsing="false" text="O user deve escolher o tempo (em segundos) da simulação, a quantidade de linhas por zona e a ordem e tempo médio de espera que o modelo ficará em cada Zona." />
+            <MenuItem fx:id="clearAllFields" mnemonicParsing="false" onAction="#clearAllFields" text="Dar Clear a todos os campos" />
           </items>
         </Menu>
       </menus>
@@ -111,12 +111,12 @@
             <ComboBox fx:id="model1Zone1Order" layoutX="188.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="0" />
                         <String fx:value="1" />
                         <String fx:value="2" />
                         <String fx:value="3" />
                         <String fx:value="4" />
                         <String fx:value="5" />
+                        <String fx:value="0" />
                     </FXCollections>
                 </items>
             </ComboBox>
@@ -125,12 +125,12 @@
             <ComboBox fx:id="model2Zone1Order" layoutX="402.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -139,12 +139,12 @@
             <ComboBox fx:id="model3Zone1Order" layoutX="614.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -153,12 +153,12 @@
             <ComboBox fx:id="model1Zone2Order" layoutX="188.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -167,12 +167,12 @@
             <ComboBox fx:id="model2Zone2Order" layoutX="402.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -181,12 +181,12 @@
             <ComboBox fx:id="model3Zone2Order" layoutX="614.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -195,12 +195,12 @@
             <ComboBox fx:id="model1Zone3Order" layoutX="188.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -209,12 +209,12 @@
             <ComboBox fx:id="model2Zone3Order" layoutX="402.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -223,12 +223,12 @@
             <ComboBox fx:id="model3Zone3Order" layoutX="614.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -237,12 +237,12 @@
             <ComboBox fx:id="model1Zone4Order" layoutX="188.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -251,12 +251,12 @@
             <ComboBox fx:id="model2Zone4Order" layoutX="402.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -265,12 +265,12 @@
             <ComboBox fx:id="model3Zone4Order" layoutX="614.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -279,12 +279,12 @@
             <ComboBox fx:id="model1Zone5Order" layoutX="188.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -293,12 +293,12 @@
             <ComboBox fx:id="model2Zone5Order" layoutX="402.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -307,12 +307,12 @@
             <ComboBox fx:id="model3Zone5Order" layoutX="614.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
               <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="0" />
                       <String fx:value="1" />
                       <String fx:value="2" />
                       <String fx:value="3" />
                       <String fx:value="4" />
                       <String fx:value="5" />
+                      <String fx:value="0" />
                   </FXCollections>
               </items>
             </ComboBox>
@@ -338,7 +338,10 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </CheckBox>
-            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="44.0" prefWidth="977.0" text="Simular" />
+            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="44.0" prefWidth="977.0" text="Simular" textFill="#0eab00">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
             <TextArea fx:id="averageBuildTimeOutput" editable="false" layoutX="10.0" layoutY="561.0" prefHeight="200.0" prefWidth="320.0" wrapText="true">
                <font>
                   <Font size="14.0" />

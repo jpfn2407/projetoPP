@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -50,39 +51,41 @@ public class GUI extends Application implements Initializable {
     public TextField model1Zone3AverageTime;
     public TextField model1Zone4AverageTime;
     public TextField model1Zone5AverageTime;
-    public ComboBox model1Zone1Order;
-    public ComboBox model1Zone2Order;
-    public ComboBox model1Zone3Order;
-    public ComboBox model1Zone4Order;
-    public ComboBox model1Zone5Order;
+    public ComboBox<String> model1Zone1Order;
+    public ComboBox<String> model1Zone2Order;
+    public ComboBox<String> model1Zone3Order;
+    public ComboBox<String> model1Zone4Order;
+    public ComboBox<String> model1Zone5Order;
 
     public TextField model2Zone1AverageTime;
     public TextField model2Zone2AverageTime;
     public TextField model2Zone3AverageTime;
     public TextField model2Zone4AverageTime;
     public TextField model2Zone5AverageTime;
-    public ComboBox model2Zone1Order;
-    public ComboBox model2Zone2Order;
-    public ComboBox model2Zone3Order;
-    public ComboBox model2Zone4Order;
-    public ComboBox model2Zone5Order;
+    public ComboBox<String> model2Zone1Order;
+    public ComboBox<String> model2Zone2Order;
+    public ComboBox<String> model2Zone3Order;
+    public ComboBox<String> model2Zone4Order;
+    public ComboBox<String> model2Zone5Order;
 
     public TextField model3Zone1AverageTime;
     public TextField model3Zone2AverageTime;
     public TextField model3Zone3AverageTime;
     public TextField model3Zone4AverageTime;
     public TextField model3Zone5AverageTime;
-    public ComboBox model3Zone1Order;
-    public ComboBox model3Zone2Order;
-    public ComboBox model3Zone3Order;
-    public ComboBox model3Zone4Order;
-    public ComboBox model3Zone5Order;
+    public ComboBox<String> model3Zone1Order;
+    public ComboBox<String> model3Zone2Order;
+    public ComboBox<String> model3Zone3Order;
+    public ComboBox<String> model3Zone4Order;
+    public ComboBox<String> model3Zone5Order;
 
     public TextArea averageBuildTimeOutput;
     public TextArea averageWaitTimeOutput;
     public TextArea averageUsagePercentageOutput;
 
     public CheckBox erlangToggle;
+
+    public MenuItem clearAllFields;
 
 
     @Override
@@ -93,8 +96,58 @@ public class GUI extends Application implements Initializable {
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("Projecto Paradigmas Programação");
         primaryStage.setScene(new Scene(root, 1000, 800));
+
+        Image image = new Image("/icons/icon.png");
+        primaryStage.getIcons().add(image);
+
         primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    public void clearAllFields() {
+        simulationTime.clear();
+        model1MinDay.clear();
+        model1MaxDay.clear();
+        model2MinDay.clear();
+        model2MaxDay.clear();
+        model3MinDay.clear();
+        model3MaxDay.clear();
+        zone1NumberOfLines.clear();
+        zone2NumberOfLines.clear();
+        zone3NumberOfLines.clear();
+        zone4NumberOfLines.clear();
+        zone5NumberOfLines.clear();
+        model1Zone1AverageTime.clear();
+        model1Zone2AverageTime.clear();
+        model1Zone3AverageTime.clear();
+        model1Zone4AverageTime.clear();
+        model1Zone5AverageTime.clear();
+        model1Zone1Order.setValue(null);
+        model1Zone1Order.setValue(model1Zone1Order.getPromptText());
+        model1Zone2Order.cancelEdit();
+        model1Zone3Order.cancelEdit();
+        model1Zone4Order.cancelEdit();
+        model1Zone5Order.cancelEdit();
+        model2Zone1AverageTime.clear();
+        model2Zone2AverageTime.clear();
+        model2Zone3AverageTime.clear();
+        model2Zone4AverageTime.clear();
+        model2Zone5AverageTime.clear();
+        model2Zone1Order.cancelEdit();
+        model2Zone2Order.cancelEdit();
+        model2Zone3Order.cancelEdit();
+        model2Zone4Order.cancelEdit();
+        model2Zone5Order.cancelEdit();
+        model3Zone1AverageTime.clear();
+        model3Zone2AverageTime.clear();
+        model3Zone3AverageTime.clear();
+        model3Zone4AverageTime.clear();
+        model3Zone5AverageTime.clear();
+        model3Zone1Order.cancelEdit();
+        model3Zone2Order.cancelEdit();
+        model3Zone3Order.cancelEdit();
+        model3Zone4Order.cancelEdit();
+        model3Zone5Order.cancelEdit();
     }
 
     public void startSimulation() {
@@ -103,7 +156,6 @@ public class GUI extends Application implements Initializable {
         averageBuildTimeOutput.clear();
         averageUsagePercentageOutput.clear();
         averageWaitTimeOutput.clear();
-
 
         ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -165,7 +217,7 @@ public class GUI extends Application implements Initializable {
         executorService.submit(() -> {
             double time = Double.parseDouble(tempString);
             double counter = 0.0;
-            while (counter <= 1.1) {
+            while (counter <= 1.05) {
                 progressBar.progressProperty().setValue(counter);
                 try {
                     TimeUnit.MICROSECONDS.sleep(Math.round((0.01 * time) * 1_000_000));
