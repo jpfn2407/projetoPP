@@ -123,31 +123,30 @@ public class GUI extends Application implements Initializable {
         model1Zone4AverageTime.clear();
         model1Zone5AverageTime.clear();
         model1Zone1Order.setValue(null);
-        model1Zone1Order.setValue(model1Zone1Order.getPromptText());
-        model1Zone2Order.cancelEdit();
-        model1Zone3Order.cancelEdit();
-        model1Zone4Order.cancelEdit();
-        model1Zone5Order.cancelEdit();
+        model1Zone2Order.setValue(null);
+        model1Zone3Order.setValue(null);
+        model1Zone4Order.setValue(null);
+        model1Zone5Order.setValue(null);
         model2Zone1AverageTime.clear();
         model2Zone2AverageTime.clear();
         model2Zone3AverageTime.clear();
         model2Zone4AverageTime.clear();
         model2Zone5AverageTime.clear();
-        model2Zone1Order.cancelEdit();
-        model2Zone2Order.cancelEdit();
-        model2Zone3Order.cancelEdit();
-        model2Zone4Order.cancelEdit();
-        model2Zone5Order.cancelEdit();
+        model2Zone1Order.setValue(null);
+        model2Zone2Order.setValue(null);
+        model2Zone3Order.setValue(null);
+        model2Zone4Order.setValue(null);
+        model2Zone5Order.setValue(null);
         model3Zone1AverageTime.clear();
         model3Zone2AverageTime.clear();
         model3Zone3AverageTime.clear();
         model3Zone4AverageTime.clear();
         model3Zone5AverageTime.clear();
-        model3Zone1Order.cancelEdit();
-        model3Zone2Order.cancelEdit();
-        model3Zone3Order.cancelEdit();
-        model3Zone4Order.cancelEdit();
-        model3Zone5Order.cancelEdit();
+        model3Zone1Order.setValue(null);
+        model3Zone2Order.setValue(null);
+        model3Zone3Order.setValue(null);
+        model3Zone4Order.setValue(null);
+        model3Zone5Order.setValue(null);
     }
 
     public void startSimulation() {
