@@ -32,8 +32,11 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -53,7 +56,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem mnemonicParsing="false" text="O user deve escolher o tempo (em segundos) da simulação, a quantidade de linhas por zona e a ordem e tempo médio de espera que o modelo ficará em cada Zona." />
           </items>
         </Menu>
       </menus>
@@ -61,7 +64,6 @@
     <AnchorPane>
       <children>
             <Separator layoutX="-1.0" layoutY="529.0" prefHeight="3.0" prefWidth="1000.0" />
-            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="44.0" prefWidth="977.0" text="Simular" />
             <TextField fx:id="simulationTime" alignment="CENTER" layoutX="261.0" layoutY="29.0" promptText="Tempo de simulação" />
             <HBox layoutX="5.0" layoutY="554.0" />
             <ProgressBar fx:id="progressBar" layoutX="14.0" layoutY="495.0" prefHeight="18.0" prefWidth="977.0" progress="0.0" />
@@ -70,7 +72,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <Text layoutX="14.0" layoutY="548.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resultados:">
+            <Text layoutX="14.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resultados:">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -92,50 +94,230 @@
             <Text layoutX="628.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
             <Text layoutX="659.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
             <Text layoutX="690.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
-            <TextField fx:id="zone1NumberOfLines" layoutX="555.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
-            <TextField fx:id="zone2NumberOfLines" layoutX="586.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
-            <TextField fx:id="zone3NumberOfLines" layoutX="617.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
-            <TextField fx:id="zone4NumberOfLines" layoutX="648.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
-            <TextField fx:id="zone5NumberOfLines" layoutX="679.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
+            <TextField fx:id="zone1NumberOfLines" alignment="CENTER" layoutX="555.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
+            <TextField fx:id="zone2NumberOfLines" alignment="CENTER" layoutX="586.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
+            <TextField fx:id="zone3NumberOfLines" alignment="CENTER" layoutX="617.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
+            <TextField fx:id="zone4NumberOfLines" alignment="CENTER" layoutX="648.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
+            <TextField fx:id="zone5NumberOfLines" alignment="CENTER" layoutX="679.0" layoutY="135.0" prefHeight="25.0" prefWidth="29.0" />
             <Text layoutX="126.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modelo:" />
             <Text layoutX="282.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
-            <TextField fx:id="model1Zone1AverageTime" layoutX="289.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
             <Text layoutX="140.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z1:" />
             <Text layoutX="140.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z2:" />
             <Text layoutX="140.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z3:" />
             <Text layoutX="140.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z4:" />
             <Text layoutX="140.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z5:" />
-            <TextField fx:id="model1Zone1Order" alignment="CENTER" layoutX="188.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
             <Text layoutX="495.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
-            <TextField fx:id="model2Zone1AverageTime" alignment="CENTER" layoutX="502.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model2Zone1Order" alignment="CENTER" layoutX="401.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField fx:id="model1Zone2AverageTime" layoutX="289.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model1Zone2Order" alignment="CENTER" layoutX="188.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField fx:id="model1Zone3AverageTime" layoutX="289.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model1Zone3Order" alignment="CENTER" layoutX="188.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField fx:id="model1Zone4AverageTime" layoutX="289.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model1Zone4Order" alignment="CENTER" layoutX="188.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField fx:id="model1Zone5AverageTime" layoutX="289.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model1Zone5Order" alignment="CENTER" layoutX="188.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+            <Text layoutX="708.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+            <ComboBox fx:id="model1Zone1Order" layoutX="188.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="0" />
+                        <String fx:value="1" />
+                        <String fx:value="2" />
+                        <String fx:value="3" />
+                        <String fx:value="4" />
+                        <String fx:value="5" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <TextField fx:id="model1Zone1AverageTime" alignment="CENTER" layoutX="289.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model2Zone1Order" layoutX="402.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model2Zone1AverageTime" alignment="CENTER" layoutX="503.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model3Zone1Order" layoutX="614.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model3Zone1AverageTime" alignment="CENTER" layoutX="716.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model1Zone2Order" layoutX="188.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model1Zone2AverageTime" alignment="CENTER" layoutX="289.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model2Zone2Order" layoutX="402.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
             <TextField fx:id="model2Zone2AverageTime" alignment="CENTER" layoutX="503.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model2Zone2Order" alignment="CENTER" layoutX="402.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+
+            <ComboBox fx:id="model3Zone2Order" layoutX="614.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model3Zone2AverageTime" alignment="CENTER" layoutX="716.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model1Zone3Order" layoutX="188.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model1Zone3AverageTime" alignment="CENTER" layoutX="289.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model2Zone3Order" layoutX="402.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
             <TextField fx:id="model2Zone3AverageTime" alignment="CENTER" layoutX="503.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model2Zone3Order" alignment="CENTER" layoutX="402.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+
+            <ComboBox fx:id="model3Zone3Order" layoutX="614.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model3Zone3AverageTime" alignment="CENTER" layoutX="716.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model1Zone4Order" layoutX="188.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model1Zone4AverageTime" alignment="CENTER" layoutX="289.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model2Zone4Order" layoutX="402.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
             <TextField fx:id="model2Zone4AverageTime" alignment="CENTER" layoutX="503.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model2Zone4Order" alignment="CENTER" layoutX="402.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+
+            <ComboBox fx:id="model3Zone4Order" layoutX="614.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model3Zone4AverageTime" alignment="CENTER" layoutX="716.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model1Zone5Order" layoutX="188.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model1Zone5AverageTime" alignment="CENTER" layoutX="289.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
+            <ComboBox fx:id="model2Zone5Order" layoutX="402.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
             <TextField fx:id="model2Zone5AverageTime" alignment="CENTER" layoutX="503.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model2Zone5Order" alignment="CENTER" layoutX="402.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <Text layoutX="705.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
-            <TextField fx:id="model3Zone1AverageTime" alignment="CENTER" layoutX="712.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model3Zone1Order" alignment="CENTER" layoutX="610.0" layoutY="249.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField fx:id="model3Zone2AverageTime" alignment="CENTER" layoutX="713.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model3Zone2Order" alignment="CENTER" layoutX="611.0" layoutY="284.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField fx:id="model3Zone3AverageTime" alignment="CENTER" layoutX="713.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model3Zone3Order" alignment="CENTER" layoutX="611.0" layoutY="318.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField fx:id="model3Zone4AverageTime" alignment="CENTER" layoutX="713.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model3Zone4Order" alignment="CENTER" layoutX="611.0" layoutY="353.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
-            <TextField fx:id="model3Zone5AverageTime" alignment="CENTER" layoutX="713.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
-            <TextField fx:id="model3Zone5Order" alignment="CENTER" layoutX="611.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem" />
+
+            <ComboBox fx:id="model3Zone5Order" layoutX="614.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Ordem">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="0" />
+                      <String fx:value="1" />
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                  </FXCollections>
+              </items>
+            </ComboBox>
+            <TextField fx:id="model3Zone5AverageTime" alignment="CENTER" layoutX="716.0" layoutY="388.0" prefHeight="25.0" prefWidth="94.0" promptText="Tempo Médio" />
+
             <Text layoutX="127.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ritmo de Chegadas:">
                <font>
                   <Font name="System Bold" size="13.0" />
@@ -156,6 +338,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </CheckBox>
+            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="44.0" prefWidth="977.0" text="Simular" />
             <TextArea fx:id="averageBuildTimeOutput" editable="false" layoutX="10.0" layoutY="561.0" prefHeight="200.0" prefWidth="320.0" wrapText="true">
                <font>
                   <Font size="14.0" />
